@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list </title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap" rel="stylesheet">
+    <style>
+        .head{
+            
+            background-color: #00A19D;
+            color:#FFF8E5;
+            
+        }
+       #h1{
+           font-size: 3rem;
+           margin-top:0;
+           padding-top:90px;
+           padding-left:100px;
+           font-family: 'Roboto Slab', serif;
+           color:#FFB344;
+           font-weight: bold;
+       }
+       #todoimg{
+           float:right;
+           width:30%;
+           padding:100px;
+       }
+       .header{
+           font-size: larger;
+           padding:50px;
+           margin-left:50px;
+           margin-right:700px;    
+           padding-top:0;      
+           font-family: 'IBM Plex Sans Arabic', sans-serif;
+           line-height: 2em;
+       }
+       button{
+           padding:9px;
+           border-radius: 4px;
+           border-style: none;
+           background-color:#00A19D;
+           color:#FFF8E5;
+           border:solid #FFF8E5;
+           
+       }
+       button:hover{
+        transform:scale(1.2);
+       }
+       #search{
+           padding: 12px;
+           width:500px;
+           border:solid #00A19D;
+           font-size: 1em;
+           border-radius:5px;
+       }
+       .todo{
+           background-color: #FFF8E5;
+       }
+       #add{
+           padding-left:300px;
+           padding-top: 100px;
+       }
+       #adding{
+           padding:12px;
+           border-radius: 4px;
+           border-style: none;
+           background-color:#00A19D;
+           color:#FFF8E5;
+           border:solid #FFF8E5;
+       }
+       #act {
+        background-color:#00A19D;
+        display: inline-block;
+        padding:7px;
+        
+        width:520px;
+        color:white;
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        font-size: 1em;
+       }     
+       #act:hover{
+        background-color:#024e4d;  
+       }  
+       .cb{
+                      
+           width:20px;
+           height:20px;
+           
+       }
+       #myList{
+           position: relative;
+           right:220px;
+           
+       }
+       .btn{
+           background-color:#E05D5D;
+           
+       }
+        input[type="checkbox"]
+       {
+         margin-left:500px;
+       }
+      
+      
+    </style>
+</head>
+<body>
+    <div class="head">
+        <img id="todoimg" src="todo.jpg" >
+        <h1 id="h1">TO DO LIST</h1>
+        <div class="header">
+        <p >We all have those days when there are a million things to do, and we don't know how we're going to get it all done.</p>
+        <p style="font-weight: bold;">Make a To do list for yourself and as you see a clear outline of your completed and uncompleted tasks will help you feel organized and stay mentally focused.</p>
+        <button >Try Now</button>
+        </div>
+    </div>
+    <div class="todo">
+        <div id="add">
+        <input id="search" type="text" placeholder="what are your plans for today?">
+        <button  id="adding">Add</button>
+        </div>
+       <div id="myList">
+
+       </div>
+                  
+    </div>
+    <script>
+       
+        var addbtn=document.getElementById('adding')
+       addbtn.addEventListener("click",function(e) {
+      let x = document.getElementById("search");
+      let list = localStorage.getItem("list");
+      if(list == null)
+      {
+          obj=[];
+      }
+      else{
+          obj=JSON.parse(list);
+      }
+      obj.push(x.value);
+      localStorage.setItem("list",JSON.stringify(obj));
+      x.value="";
+      console.log(obj);
+      show();
+    })
+    
+    function show(){
+        let list= localStorage.getItem("list");
+        document.getElementById("myList").innerHTML="";
+        obj.forEach(function(element,index) {
+        var node1=document.createElement("input");
+        node1.setAttribute("class","cb");
+        node1.setAttribute("id",index);
+        node1.onclick = function() { checked(this.id);};
+        
+        node1.setAttribute("type","checkbox");
+        document.getElementById("myList").appendChild(node1);
+        var node=document.createElement("p");
+        node.setAttribute("id","act");
+        node.onclick = function() { uncheck(this.id);};
+        var textnode=document.createTextNode(element);
+        node.appendChild(textnode);
+        document.getElementById("myList").appendChild(node);
+        var btn=document.createElement("button");
+        btn.innerHTML = "X";
+        btn.setAttribute("class","btn");
+        btn.setAttribute("id",index);
+        document.getElementById("myList").appendChild(btn);
+        btn.onclick = function() { delact(this.id);};
+       
+        function checked(index){
+        console.log(index); 
+        node.style.textDecorationLine="line-through";
+        node.style.color="#e3e6e5"
+    }
+    function uncheck(index){
+        console.log("happy"); 
+        node.style.textDecorationLine="none";
+        node.style.color="white";
+        node1.checked=false;
+    }
+      });
+    }
+    function delact(index){
+            console.log(index);
+            let list= localStorage.getItem("list");  
+            obj.splice(index,1);
+            localStorage.setItem("list",JSON.stringify(obj));
+            show();
+        }
+   
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>
